@@ -239,8 +239,8 @@ Proof.
   admit.
 Admitted.
 
-(* TODO: E1 *)
+(* TODO: E1 (Lamport 1994) *)
 
-(* TODO: E2 *)
+(* TODO: E2 (Lamport 1994) *)
 
 End rules.
