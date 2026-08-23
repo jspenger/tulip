@@ -1,6 +1,9 @@
--Q tulip-tla              tulip.tla
--Q examples/01-hour-clock tulip.examples.hourclock
+-Q tulip-tla               tulip.tla
+-Q examples/01-hour-clock  tulip.examples.hourclock
+-Q examples/02-proof-rules tulip.examples.proofrules
 
 tulip-tla/TLA.v
 
 examples/01-hour-clock/HourClock.v
+
+examples/02-proof-rules/ProofRules.v
