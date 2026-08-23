@@ -6,7 +6,7 @@ Require Import tulip.tla.TLA.
 Section rules.
 
 Context {State : Type}.
-Local Notation prop := (property State).
+#[local] Notation prop := (property State).
 
 (* ========================================================================== *)
 (* The proof rules are from (unless otherwise stated):                        *)

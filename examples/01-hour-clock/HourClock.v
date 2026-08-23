@@ -3,7 +3,6 @@ Require Import tulip.tla.TLA.
 
 #[local] Open Scope tla_scope.
 
-
 (* ========================================================================== *)
 (* The hour-clock (HC) specification is adapted from:                         *)
 (* > Leslie Lamport. 2002. Specifying Systems: The TLA+ Language and Tools    *)
@@ -19,7 +18,7 @@ Require Import tulip.tla.TLA.
 
 Module HC.
     Record State := { hour : nat }.
-    Local Notation prop := (property State).
+    #[local] Notation prop := (property State).
     Definition vars (s : State) : State := s.
 
     Definition Init : prop := Lift1 (fun s => 
@@ -34,7 +33,6 @@ Module HC.
         Init \land [][Next]_vars
     ).
 End HC.
-
 
 (* ========================================================================== *)
 (* Safety                                                                     *)
@@ -83,7 +81,6 @@ Proof.
     admit.
 Admitted.
 
-
 (* ========================================================================== *)
 (* Safety props imply hc: valid ((Type_OK \land Incr_OK) \impl HC.Spec)       *)
 (* ========================================================================== *)
@@ -95,7 +92,6 @@ Theorem safety_impl_hc :
 Proof.
     admit.
 Admitted.
-
 
 (* ========================================================================== *)
 (* Liveness                                                                   *)
@@ -112,7 +108,6 @@ Definition HC_Is_Live : property HC.State :=
         )
     ).
 
-
 (* ========================================================================== *)
 (* Hour clock is not live: ~ valid (HC.Spec \impl HC_Is_Live)                 *)
 (* ========================================================================== *)
@@ -124,7 +119,6 @@ Theorem not_hc_impl_live :
 Proof.
     admit.
 Admitted.
-
 
 (* ========================================================================== *)
 (* Fair hour clock is live: valid ((HC.Spec \land F) \impl HC_Is_Live)        *)
@@ -141,7 +135,6 @@ Proof.
     admit.
 Admitted.
 
-
 (* ========================================================================== *)
 (* Refinemenet                                                                *)
 (* ========================================================================== *)
@@ -152,7 +145,7 @@ Admitted.
 
 Module HMC.
     Record State := { hour : nat ; minute : nat }.
-    Local Notation prop := (property State).
+    #[local] Notation prop := (property State).
     Definition vars (s : State) : State := s.
 
     Definition Init : prop := Lift1 (fun s =>
@@ -176,7 +169,6 @@ Module HMC.
     Definition F : property HMC.State :=
         WF_(HMC.vars) (HMC.Next).
 End HMC.
-
 
 (* ========================================================================== *)
 (* Refinement: valid ((HMC.Spec WITH r) \impl HC.Spec)                        *)
@@ -208,7 +200,6 @@ Theorem hmc_equiv_hc :
 Proof.
     admit.
 Admitted.
-
 
 (* ========================================================================== *)
 (* Refinement with fairness                                                   *)

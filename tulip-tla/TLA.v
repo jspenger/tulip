@@ -74,7 +74,7 @@ Definition util_suffix {State : Type} (beh : behavior State) (k : nat) : behavio
 
 Section tla.
     Context {State : Type}.
-    Local Notation prop := (property State).
+    #[local] Notation prop := (property State).
 
     (* Lift Coq expressions. *)
 

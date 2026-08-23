@@ -5,21 +5,21 @@ Require Import tulip.tla.TLA.
 Section rules.
 
 Context {State : Type}.
-Local Notation prop := (property State).
+#[local] Notation prop := (property State).
 
 (* ========================================================================== *)
 (* Utility lemmas (local)                                                     *)
 (* ========================================================================== *)
 
 (* Note: not from references *)
-Local Lemma util_suffix_0 (beh : behavior State) :
+#[local] Lemma util_suffix_0 (beh : behavior State) :
     util_suffix beh 0 = beh.
 Proof.
   admit.
 Admitted.
 
 (* Note: not from references *)
-Local Lemma util_beh_eq (b c : behavior State) :
+#[local] Lemma util_beh_eq (b c : behavior State) :
     (forall n : nat, b n = c n) ->
         util_stuttering_equivalent b c.
 Proof.
@@ -123,7 +123,7 @@ Admitted.
 (* Local rule R1 proves that the strengthened form implies the other.         *)
 
 (* Note: not from references *)
-Local Lemma R1 (F G : prop) :
+#[local] Lemma R1 (F G : prop) :
     valid ([]F \impl G)
         -> valid F
             -> valid G.
@@ -132,7 +132,7 @@ Proof.
 Admitted.
 
 (* Note: not from references *)
-Local Lemma R2 (F G : prop) :
+#[local] Lemma R2 (F G : prop) :
     valid (F \impl G)
         -> valid F
             -> valid G.
