@@ -7,3 +7,4 @@ tulip-tla/TLA.v
 examples/01-hour-clock/HourClock.v
 
 examples/02-proof-rules/Rules.v
+examples/02-proof-rules/classical/FairnessRules.v
