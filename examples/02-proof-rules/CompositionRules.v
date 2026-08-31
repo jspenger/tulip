@@ -50,6 +50,18 @@ Definition util_plus_operator {State V : Type} (F : property State) (v : State -
                 (forall n : nat, k <= n -> v (beh n) = v (beh (S n)))
                 /\ util_tts F beh k).
 
+(* Ref: "Conjoining Specifications", section 3.5 *)
+(* The "-+-> operator" is defined such that "E -+-> M is true of a behavior
+   \sigma iff E => M is true of \sigma and, for every n >= 0, if E holds for the
+   first n states of \sigma, then M holds for the first n + 1 states of
+   \sigma." *)
+(* `E -+-> F` *)
+Definition util_plus_arrow {State : Type} (E F : property State) : property State :=
+    fun beh =>
+        (E beh -> F beh)
+        /\ (forall n : nat,
+                util_tts E beh n -> util_tts F beh (S n)).
+
 (* ========================================================================== *)
 (* Composition                                                                *)
 (* ========================================================================== *)
@@ -77,7 +89,8 @@ Theorem Decomposition {V : Type} (v : State -> V) (E Ml M : nat -> prop) :
             valid (((E i) \land ((Ml i) \land (\A j : ((LIFT0 (j < i)) \impl (M j)))))
                 \impl (M i))) ->
     (* ...then *)
-    valid ((\A i : Ml i) \impl (\A i : M i)).
+    valid ((\A i : Ml i)
+        \impl (\A i : M i)).
 Proof.
 (* TODO *) Admitted.
 
@@ -108,5 +121,119 @@ Proof.
             valid ((Ml0 \land Ml1)  \impl  (M0 \land M1)).
 Proof.
 (* TODO *)  Admitted.
+
+(* Ref: SCP Theorem 8.8 (Composition Theorem) *)
+Theorem Composition {V : Type} (v : State -> V) (E M : prop) (E_ M_ : nat -> prop) :
+    util_stuttering_closed E  ->
+    (forall j : nat,
+            util_stuttering_closed (M_ j))  ->
+    (* If... *)
+    (* 1. *)
+    valid (\A i : (((util_closure E) \land (\A j : (util_closure (M_ j))))
+        \impl (E_ i))) ->
+    (* 2. (a) *)
+    valid (((util_plus_operator (util_closure E) v) \land (\A j : (util_closure (M_ j))))
+        \impl (util_closure M)) ->
+    (* 2. (b) *)
+    valid ((E \land (\A j : M_ j))
+        \impl M) ->
+    (* ...then *)
+    valid ((\A j : (util_plus_arrow (E_ j) (M_ j)))
+        \impl (util_plus_arrow E M)).
+Proof.
+(* TODO *) Admitted.
+
+(* Ref: "Conjoining Specifications" Corollary 1 *)
+Corollary CompositionCor1 {V : Type} (v : State -> V) (E Ml M : prop) :
+    util_stuttering_closed E ->
+    util_stuttering_closed Ml ->
+    (* If... *)
+    valid ((util_closure E)
+        \impl E)  ->
+    (* (a) *)
+    valid (((util_plus_operator E v) \land (util_closure Ml))
+        \impl (util_closure M)) ->
+    (* (b) *)
+    valid ((E \land Ml)
+        \impl M) ->
+    (* ...then *)
+    valid ((util_plus_arrow E Ml)
+        \impl (util_plus_arrow E M)).
+Proof.
+(* TODO *) Admitted.
+
+(* Not from refs *)
+(* Acyclic form of the `Composition` theorem with strengthening of hypothesis
+   (1.) by replacing `util_closure E` with `E` and `util_closure (M_ j)` with
+   `M_ j` *)
+Theorem Composition0 (E M : prop) (E_ M_ : nat -> prop) :
+    (* If... *)
+    (* 1. *)
+    valid (\A i : ((E \land (\A j : ((LIFT0 (j < i)) \impl (M_ j))))
+        \impl (E_ i))) ->
+    (* 2. (b) *)
+    valid ((E \land (\A j : M_ j))
+        \impl M) ->
+    (* ...then *)
+    valid ((\A j : ((E_ j) \impl (M_ j)))
+        \impl (E \impl M)).
+Proof.
+(* TODO *) Admitted.
+
+(* Ref: "Conjoining Specifications" Theorem 2 (General Decomposition Theorem) *)
+(* The hypothesis "v is a tuple of variables including all the free variables of
+   Mi" ("Conjoining Specifications", Theorem 2) is omitted. Instead, as
+   suggested in SCP, "The theorem does not [need to] make any assumption about
+   v". *)
+(* The definition adds `(\A j : ((LIFT0 (j < i)) \impl (M_ j)))` to hypothesis
+   (2) b as is done in `Decomposition` (SCP, Theorem 8.7) but missing from
+   Theorem 2. *)
+Theorem GeneralDecomposition {V : Type} (v : State -> V) (E : prop) (E_ Ml_ M_ : nat -> prop) :
+    util_stuttering_closed E  ->
+    (forall i : nat,
+            util_stuttering_closed (Ml_ i))  ->
+    (* If... *)
+    (* (1) *)
+    (forall i : nat,
+            valid (((util_closure E) \land (\A j : (util_closure (M_ j))))
+                \impl (E_ i))) ->
+    (* (2) (a) *)
+    (forall i : nat,
+            valid (((util_plus_operator (util_closure (E_ i)) v) \land (util_closure (Ml_ i)))
+                \impl (util_closure (M_ i)))) ->
+    (* (2) (b) *)
+    (forall i : nat,
+            valid (((E_ i) \land ((Ml_ i) \land (\A j : ((LIFT0 (j < i)) \impl (M_ j)))))
+                \impl (M_ i))) ->
+    (* ...then *)
+    (* (a) *)
+    valid (((util_plus_operator (util_closure E) v) \land (\A j : (util_closure (Ml_ j))))
+        \impl (\A j : (util_closure (M_ j))))
+    (* (b) *)
+    /\ valid ((E \land (\A j : Ml_ j))
+        \impl (\A j : M_ j)).
+Proof.
+(* TODO *) Admitted.
+
+(* Not from refs *)
+(* Acyclic form of the `GeneralDecomposition` theorem with strenghtening of
+   hypothesis (1) by replacing `util_closure E` with `E` and
+   `util_closure (M j)` with `M j` *)
+Theorem GeneralDecomposition0 (E : prop) (E_ Ml_ M_ : nat -> prop) :
+    (* If... *)
+    (* (1) *)
+    (forall i : nat,
+            valid ((E \land (\A j : ((LIFT0 (j < i)) \impl (M_ j))))
+                \impl (E_ i))) ->
+    (* (2) (b) *)
+    (forall i : nat,
+            valid (((E_ i) \land ((Ml_ i) \land (\A j : ((LIFT0 (j < i)) \impl (M_ j)))))
+                \impl (M_ i))) ->
+    (* ...then *)
+    (* (b) *)
+    valid ((E \land (\A j : Ml_ j))
+        \impl (\A j : M_ j)).
+Proof.
+(* TODO *) Admitted.
 
 End rules.
