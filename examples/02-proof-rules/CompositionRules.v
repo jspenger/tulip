@@ -95,7 +95,7 @@ Proof.
 (* TODO *) Admitted.
 
 (* Not from refs *)
-(* Acyclic form of the `Decomposition` theorem with strenghtening of hypothesis 
+(* Acyclic form of the `Decomposition` theorem with strengthening of hypothesis 
    (1.) by replacing `util_closure (M j)` with `M j` *)
 Theorem Decomposition0 (E Ml M : nat -> prop) :
     (* If... *)
@@ -216,7 +216,7 @@ Proof.
 (* TODO *) Admitted.
 
 (* Not from refs *)
-(* Acyclic form of the `GeneralDecomposition` theorem with strenghtening of
+(* Acyclic form of the `GeneralDecomposition` theorem with strengthening of
    hypothesis (1) by replacing `util_closure E` with `E` and
    `util_closure (M j)` with `M j` *)
 Theorem GeneralDecomposition0 (E : prop) (E_ Ml_ M_ : nat -> prop) :
