@@ -7,7 +7,7 @@ Require Import tulip.tla.TLA.
 (* The proof rules are from (unless otherwise stated):                        *)
 (* [1]                                                                      *)
 (* > Leslie Lamport. 1994. The temporal logic of actions. ACM Trans. Program. *)
-(* > Lang. Syst. 16, 3 (May 1994), 872–923.                                   *)
+(* > Lang. Syst. 16, 3 (May 1994), 872-923.                                   *)
 (* > https://doi.org/10.1145/177492.177726                                    *)
 (* ========================================================================== *)
 
