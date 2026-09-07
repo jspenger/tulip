@@ -33,8 +33,11 @@ Definition valid {State : Type} (F : property State) : Prop :=
 Definition util_monotone (f : nat -> nat) : Prop :=
     forall n, f n <= f (S n).
 
-Definition util_surjective (f: nat -> nat) : Prop :=
-    forall m, exists n, f n = m.
+Definition util_surjective {A B : Type} (f: A -> B) : Prop :=
+    forall y, exists x, f x = y.
+
+Definition util_injective {A B : Type} (f: A -> B) : Prop :=
+    forall x y, f x = f y -> x = y.
 
 Definition util_stuttering_equivalent {State : Type} (b c : behavior State) : Prop :=
     exists f g : nat -> nat,

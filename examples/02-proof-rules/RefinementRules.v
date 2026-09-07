@@ -29,13 +29,9 @@ Proof.
     admit.
 Admitted.
 
-#[local] Definition injective {A B : Type} (f : A -> B) : Prop :=
-    forall x y : A,
-        f x = f y -> x = y.
-
 (* Note: not from references *)
 Lemma RM2 (f : State1 -> State2) (F G : property State1) :
-    injective f ->
+    util_injective f ->
         util_stuttering_closed G ->
             valid ((F WITH f) \impl (G WITH f)) ->
                 valid (F \impl G).

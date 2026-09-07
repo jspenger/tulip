@@ -15,7 +15,7 @@ Require Import tulip.tla.TLA.
 (* ========================================================================== *)
 
 (* ========================================================================== *)
-(* Utility lemmas (local)                                                     *)
+(* Utility definitions                                                        *)
 (* ========================================================================== *)
 
 (* Ref: SCP Section 8.2.1.2 *)
@@ -36,6 +36,32 @@ Definition util_tts {State : Type} (P : property State) (beh : behavior State) (
 (* `\C(F)` *)
 Definition util_closure {State : Type} (F : property State) : property State :=
     fun beh => forall n : nat, util_tts F beh n.
+
+(* Not from refs *)
+(* Extraction of the safety property of a property. Alias of `util_closure`. *)
+Definition util_prop_safety_of {State : Type} (F : property State) : property State :=
+    util_closure F.
+
+(* Not from refs *)
+(* Extraction of the liveness property of a property. Alias of `util_closure F
+   \impl F`. *)
+Definition util_prop_liveness_of {State : Type} (F : property State) : property State :=
+    util_closure F \impl F.
+
+(* Ref: "Conjoining Specifications", section 3.4 *)
+(* "(P, L) is called machine closed iff C(P /\ L) equals P" *)
+(* Note: This definition is only satisfied when F is a safety property. One may
+   instead define machine closed as `util_closure(F \land L) \equiv
+   util_closure(F)` to express that L does not introduce any new safety
+   properties beyond what is implied by F. *)
+Definition util_machine_closed {State : Type} (F L : property State) : Prop :=
+    valid (util_closure(F \land L) \equiv F).
+
+Definition util_prop_is_safety {State : Type} (F : property State) : Prop :=
+    valid (util_closure F \impl F).
+
+Definition util_prop_is_liveness {State : Type} (F : property State) : Prop :=
+    valid (util_closure F).
 
 (* Ref: "Conjoining Specifications", section 3.5 *)
 (* The "+ operator" is defined such that "a behavior \sigma satisfies E+v iff
@@ -61,6 +87,31 @@ Definition util_plus_arrow {State : Type} (E F : property State) : property Stat
         (E beh -> F beh)
         /\ (forall n : nat,
                 util_tts E beh n -> util_tts F beh (S n)).
+
+(* ========================================================================== *)
+(* Utility lemmas                                                             *)
+(* ========================================================================== *)
+
+Lemma property_implies_closure {State : Type} (F : property State) :
+    valid (F \impl util_closure F).
+Proof.
+(* TODO *) Admitted.
+
+Lemma machine_closed_def_iff {State : Type} (F L : property State) :
+    util_machine_closed F L <->
+        (* Ref: SCP Section 4.2.2 *)
+        (* "In general, a pair <S, L>, where S is a safety property and L a
+           liveness property, is defined to be machine closed iff every finite
+           behavior satisfying S can be completed to a behavior satisfying
+           S /\ L." *)
+        util_prop_is_safety F
+        /\ (forall (beh : behavior State) (n: nat),
+                (* The definition of `util_tts` states that some behavior
+                   with prefix `beh` up to state `n` satisfies `F` *)
+                (util_tts F beh n) ->
+                    (util_tts (F \land L) beh n)).
+Proof.
+(* TODO *) Admitted.
 
 (* ========================================================================== *)
 (* Composition                                                                *)
