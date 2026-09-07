@@ -173,6 +173,26 @@ Proof.
 Proof.
 (* TODO *)  Admitted.
 
+(* Not from refs *)
+(* Acyclic form of the `Decomposition` theorem with structure defined over
+   `dep`endency relation (`dep i j` reads "j depends on i" or "i before j")
+   (cf. Decomposition0). *)
+Corollary Decomposition1 (dep : nat -> nat -> Prop) (E Ml M : nat -> prop) :
+    well_founded dep -> (* The `dep` relation is acyclic and well-founded *)
+    (* If... *)
+    (* 1. *)
+    (forall i : nat,
+            valid ((\A j : ((LIFT0 (dep j i)) \impl (M j)))
+                \impl (E i))) ->
+    (* 2. (b) *)
+    (forall i : nat,
+            valid (((E i) \land ((Ml i) \land (\A j : ((LIFT0 (dep j i)) \impl (M j)))))
+                \impl (M i))) ->
+    (* ...then *)
+    valid ((\A i : Ml i) \impl (\A i : M i)).
+Proof.
+(* TODO *) Admitted.
+
 (* Ref: SCP Theorem 8.8 (Composition Theorem) *)
 Theorem Composition {V : Type} (v : State -> V) (E M : prop) (E_ M_ : nat -> prop) :
     util_stuttering_closed E  ->
@@ -279,6 +299,28 @@ Theorem GeneralDecomposition0 (E : prop) (E_ Ml_ M_ : nat -> prop) :
     (* (2) (b) *)
     (forall i : nat,
             valid (((E_ i) \land ((Ml_ i) \land (\A j : ((LIFT0 (j < i)) \impl (M_ j)))))
+                \impl (M_ i))) ->
+    (* ...then *)
+    (* (b) *)
+    valid ((E \land (\A j : Ml_ j))
+        \impl (\A j : M_ j)).
+Proof.
+(* TODO *) Admitted.
+
+(* Not from refs *)
+(* Acyclic form of the `GeneralDecomposition` theorem with structure defined
+   over `dep`endency relation (`dep i j` reads "j depends on i" or
+   "i before j") (cf. GeneralDecomposition0). *)
+Corollary GeneralDecomposition1 (dep : nat -> nat -> Prop) (E : prop) (E_ Ml_ M_ : nat -> prop) :
+    well_founded dep -> (* The `dep` relation is acyclic and well-founded *)
+    (* If... *)
+    (* (1) *)
+    (forall i : nat,
+            valid ((E \land (\A j : ((LIFT0 (dep j i)) \impl (M_ j))))
+                \impl (E_ i))) ->
+    (* (2) (b) *)
+    (forall i : nat,
+            valid (((E_ i) \land ((Ml_ i) \land (\A j : ((LIFT0 (dep j i)) \impl (M_ j)))))
                 \impl (M_ i))) ->
     (* ...then *)
     (* (b) *)
