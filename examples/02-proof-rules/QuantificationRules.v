@@ -85,6 +85,14 @@ Lemma EE3 {V : Type} (x : string) (F G : property (State V)) :
 Proof.
 (* TODO *) Admitted.
 
+(* Not from refs *)
+Lemma EE4 {V : Type} (x : string) (F G : property (State V)) :
+    valid ((\EE x : F) \impl F) -> (* x not free in F *)
+        valid ((\EE x : (F \land G))
+            \equiv (F \land (\EE x : G))).
+Proof.
+(* TODO *) Admitted.
+
 (* E1 from [1] adapted to \AA *)
 Lemma FF1 {V : Type} (x : string) (F : property (State V)) :
     valid ((\AA x : F) \impl F).
@@ -103,5 +111,13 @@ Proof.
 Lemma FF3 {V : Type} (x : string) (F G : property (State V)) :
     valid (F \impl G)
         -> valid ((\AA x : F) \impl (\AA x : G)).
+Proof.
+(* TODO *) Admitted.
+
+(* Not from refs *)
+Lemma FF4 {V : Type} (x : string) (F G : property (State V)) :
+    valid (F \impl \AA x : F) -> (* x not free in F *)
+        valid ((\AA x : (F \lor G))
+            \equiv (F \lor (\AA x : G))).
 Proof.
 (* TODO *) Admitted.

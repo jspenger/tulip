@@ -239,8 +239,7 @@ Proof.
   admit.
 Admitted.
 
-(* TODO: E1 (Lamport 1994) *)
-
-(* TODO: E2 (Lamport 1994) *)
+(* E1 (Lamport 1994): See EE1 in examples/02-proof-rules/QuantificationRules.v *)
+(* E2 (Lamport 1994): See EE2 in examples/02-proof-rules/QuantificationRules.v *)
 
 End rules.

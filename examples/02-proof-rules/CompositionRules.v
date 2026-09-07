@@ -30,6 +30,15 @@ Definition util_tts {State : Type} (P : property State) (beh : behavior State) (
             P beh'
             /\ (forall n : nat, n < k -> beh' n = beh n)).
 
+(* Not from refs *)
+(* Note: the case k=0 corresponds to satisfiability of `P`, i.e., if some
+   behavior exists that satisfies `P`. In contrast, `util_tts` considers
+   the case k=0 as True. *)
+Definition util_extends_from_state {State : Type} (P : property State) (beh : behavior State) (k : nat) : Prop :=
+    exists beh' : behavior State,
+        P beh'
+        /\ (forall n : nat, n < k -> beh' n = beh n).
+
 (* Ref: "Conjoining Specifications", section 3.4 *)
 (* The closure of F `C(F)` is defined "such that a behavior \sigma satisfies
    C(F) iff every prefix of \sigma satisfies F". *)
@@ -190,6 +199,24 @@ Corollary Decomposition1 (dep : nat -> nat -> Prop) (E Ml M : nat -> prop) :
                 \impl (M i))) ->
     (* ...then *)
     valid ((\A i : Ml i) \impl (\A i : M i)).
+Proof.
+(* TODO *) Admitted.
+
+(* Not from refs *)
+(* Refinement form of the `Decomposition` theorem (cf.
+   Decomposition1). *)
+Corollary Decomposition2 {State2 : Type} (r : State -> State2 -> Prop) (E : nat -> property State2) (Ml : nat -> property State) (M : nat -> property State2) :
+    (* If... *)
+    (* 1. *)
+    (forall i : nat,
+            valid ((\A j : ((LIFT0 (j < i)) \impl (M j)))
+                \impl (E i))) ->
+    (* 2. (b) *)
+    (forall i : nat,
+            valid (((E i) \land (((Ml i) WITH0 r) \land (\A j : ((LIFT0 (j < i)) \impl (M j)))))
+                \impl (M i))) ->
+    (* ...then *)
+    valid (((\A i : Ml i) WITH0 r) \impl (\A i : M i)).
 Proof.
 (* TODO *) Admitted.
 
