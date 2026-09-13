@@ -30,10 +30,10 @@ Lemma WF1 {V : Type} (P Q N A : prop) (f : State -> V) :
         P \land <<(N \land A)>>_f \impl Q '
     )
     /\ valid(
-        P \impl ENABLED <<A>>_f
+        P \impl \enabled <<A>>_f
     )
     -> valid(
-        (([]([N]_f)) \land (WF_ f (A)))
+        (([]([N]_f)) \land (\wf A \sub f))
         \impl
         (P \leadsto Q)
     ).
@@ -46,16 +46,16 @@ Lemma WF2 {Vf Vg : Type} (N M A B P F : prop) (f : State -> Vf) (g : State -> Vg
         <<(N \land B)>>_f \impl <<M>>_g
     )
     /\ valid (
-        P \land (P ') \land <<(N \land A)>>_f \land ENABLED <<M>>_g \impl B
+        P \land (P ') \land <<(N \land A)>>_f \land \enabled <<M>>_g \impl B
     )
     /\ valid (
-        P \land ENABLED <<M>>_g \impl ENABLED <<A>>_f
+        P \land \enabled <<M>>_g \impl \enabled <<A>>_f
     )
     /\ valid (
-        ([]([(N \land (\lnot B))]_f)) \land (WF_ f (A)) \land ([]F) \land (<>([](ENABLED <<M>>_g))) \impl (<>([]P))
+        ([]([(N \land (\lnot B))]_f)) \land (\wf A \sub f) \land ([]F) \land (<>([](\enabled <<M>>_g))) \impl (<>([]P))
     )
     -> valid (
-        (([]([N]_f)) \land (WF_ f (A)) \land ([]F)) \impl (WF_ g (M))
+        (([]([N]_f)) \land (\wf A \sub f) \land ([]F)) \impl (\wf M \sub g)
     ).
 Proof.
     admit.
@@ -69,10 +69,10 @@ Lemma SF1 {V : Type} (P Q N A F : prop) (f : State -> V) :
         (P \land (<<(N \land A)>>_f)) \impl (Q ')
     )
     /\ valid(
-        (([]P) \land ([]([N]_f)) \land ([]F)) \impl (<>(ENABLED (<<A>>_f)))
+        (([]P) \land ([]([N]_f)) \land ([]F)) \impl (<>(\enabled (<<A>>_f)))
     )
     -> valid(
-        (([]([N]_f)) \land (SF_ f (A)) \land ([]F)) \impl (P \leadsto Q)
+        (([]([N]_f)) \land (\sf A \sub f) \land ([]F)) \impl (P \leadsto Q)
     ).
 Proof.
     admit.
@@ -86,13 +86,13 @@ Lemma SF2 {Vf Vg : Type} (N M A B P F : prop) (f : State -> Vf) (g : State -> Vg
         P \land (P ') \land (<<(N \land A)>>_f) \impl B
     )
     /\ valid (
-        P \land (ENABLED (<<M>>_g)) \impl (ENABLED (<<A>>_f))
+        P \land (\enabled (<<M>>_g)) \impl (\enabled (<<A>>_f))
     )
     /\ valid (
-        (([]([(N \land (\lnot B))]_f)) \land (SF_ f (A)) \land ([]F) \land ([]<>(ENABLED (<<M>>_g)))) \impl (<>([]P))
+        (([]([(N \land (\lnot B))]_f)) \land (\sf A \sub f) \land ([]F) \land ([]<>(\enabled (<<M>>_g)))) \impl (<>([]P))
     )
     -> valid (
-        (([]([N]_f)) \land (SF_ f (A)) \land ([]F)) \impl (SF_ g (M))
+        (([]([N]_f)) \land (\sf A \sub f) \land ([]F)) \impl (\sf M \sub g)
     ).
 Proof.
     admit.

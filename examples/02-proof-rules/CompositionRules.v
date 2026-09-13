@@ -138,7 +138,7 @@ Theorem Decomposition {V : Type} (v : State -> V) (E Ml M : nat -> prop) :
     (* If... *)
     (* 1. *)
     (forall i : nat,
-            valid ((\A j : (util_closure (M j)))
+            valid ((\A j \st (util_closure (M j)))
                 \impl (E i))) ->
     (* 2. (a) *)
     (forall i : nat,
@@ -146,11 +146,11 @@ Theorem Decomposition {V : Type} (v : State -> V) (E Ml M : nat -> prop) :
                 \impl (util_closure (M i)))) ->
     (* 2. (b) *)
     (forall i : nat,
-            valid (((E i) \land ((Ml i) \land (\A j : ((LIFT0 (j < i)) \impl (M j)))))
+            valid (((E i) \land ((Ml i) \land (\A j \st ((\lift0 (j < i)) \impl (M j)))))
                 \impl (M i))) ->
     (* ...then *)
-    valid ((\A i : Ml i)
-        \impl (\A i : M i)).
+    valid ((\A i \st Ml i)
+        \impl (\A i \st M i)).
 Proof.
 (* TODO *) Admitted.
 
@@ -161,14 +161,14 @@ Theorem Decomposition0 (E Ml M : nat -> prop) :
     (* If... *)
     (* 1. *)
     (forall i : nat,
-            valid ((\A j : ((LIFT0 (j < i)) \impl (M j)))
+            valid ((\A j \st ((\lift0 (j < i)) \impl (M j)))
                 \impl (E i))) ->
     (* 2. (b) *)
     (forall i : nat,
-            valid (((E i) \land ((Ml i) \land (\A j : ((LIFT0 (j < i)) \impl (M j)))))
+            valid (((E i) \land ((Ml i) \land (\A j \st ((\lift0 (j < i)) \impl (M j)))))
                 \impl (M i))) ->
     (* ...then *)
-    valid ((\A i : Ml i) \impl (\A i : M i)).
+    valid ((\A i \st Ml i) \impl (\A i \st M i)).
 Proof.
 (* TODO *)  Admitted.
 
@@ -191,14 +191,14 @@ Corollary Decomposition1 (dep : nat -> nat -> Prop) (E Ml M : nat -> prop) :
     (* If... *)
     (* 1. *)
     (forall i : nat,
-            valid ((\A j : ((LIFT0 (dep j i)) \impl (M j)))
+            valid ((\A j \st ((\lift0 (dep j i)) \impl (M j)))
                 \impl (E i))) ->
     (* 2. (b) *)
     (forall i : nat,
-            valid (((E i) \land ((Ml i) \land (\A j : ((LIFT0 (dep j i)) \impl (M j)))))
+            valid (((E i) \land ((Ml i) \land (\A j \st ((\lift0 (dep j i)) \impl (M j)))))
                 \impl (M i))) ->
     (* ...then *)
-    valid ((\A i : Ml i) \impl (\A i : M i)).
+    valid ((\A i \st Ml i) \impl (\A i \st M i)).
 Proof.
 (* TODO *) Admitted.
 
@@ -209,14 +209,14 @@ Corollary Decomposition2 {State2 : Type} (r : State -> State2 -> Prop) (E : nat 
     (* If... *)
     (* 1. *)
     (forall i : nat,
-            valid ((\A j : ((LIFT0 (j < i)) \impl (M j)))
+            valid ((\A j \st ((\lift0 (j < i)) \impl (M j)))
                 \impl (E i))) ->
     (* 2. (b) *)
     (forall i : nat,
-            valid (((E i) \land (((Ml i) WITH0 r) \land (\A j : ((LIFT0 (j < i)) \impl (M j)))))
+            valid (((E i) \land (((Ml i) \with0 r) \land (\A j \st ((\lift0 (j < i)) \impl (M j)))))
                 \impl (M i))) ->
     (* ...then *)
-    valid (((\A i : Ml i) WITH0 r) \impl (\A i : M i)).
+    valid (((\A i \st Ml i) \with0 r) \impl (\A i \st M i)).
 Proof.
 (* TODO *) Admitted.
 
@@ -227,16 +227,16 @@ Theorem Composition {V : Type} (v : State -> V) (E M : prop) (E_ M_ : nat -> pro
             util_stuttering_closed (M_ j))  ->
     (* If... *)
     (* 1. *)
-    valid (\A i : (((util_closure E) \land (\A j : (util_closure (M_ j))))
+    valid (\A i \st (((util_closure E) \land (\A j \st (util_closure (M_ j))))
         \impl (E_ i))) ->
     (* 2. (a) *)
-    valid (((util_plus_operator (util_closure E) v) \land (\A j : (util_closure (M_ j))))
+    valid (((util_plus_operator (util_closure E) v) \land (\A j \st (util_closure (M_ j))))
         \impl (util_closure M)) ->
     (* 2. (b) *)
-    valid ((E \land (\A j : M_ j))
+    valid ((E \land (\A j \st M_ j))
         \impl M) ->
     (* ...then *)
-    valid ((\A j : (util_plus_arrow (E_ j) (M_ j)))
+    valid ((\A j \st (util_plus_arrow (E_ j) (M_ j)))
         \impl (util_plus_arrow E M)).
 Proof.
 (* TODO *) Admitted.
@@ -267,13 +267,13 @@ Proof.
 Theorem Composition0 (E M : prop) (E_ M_ : nat -> prop) :
     (* If... *)
     (* 1. *)
-    valid (\A i : ((E \land (\A j : ((LIFT0 (j < i)) \impl (M_ j))))
+    valid (\A i \st ((E \land (\A j \st ((\lift0 (j < i)) \impl (M_ j))))
         \impl (E_ i))) ->
     (* 2. (b) *)
-    valid ((E \land (\A j : M_ j))
+    valid ((E \land (\A j \st M_ j))
         \impl M) ->
     (* ...then *)
-    valid ((\A j : ((E_ j) \impl (M_ j)))
+    valid ((\A j \st ((E_ j) \impl (M_ j)))
         \impl (E \impl M)).
 Proof.
 (* TODO *) Admitted.
@@ -283,7 +283,7 @@ Proof.
    Mi" ("Conjoining Specifications", Theorem 2) is omitted. Instead, as
    suggested in SCP, "The theorem does not [need to] make any assumption about
    v". *)
-(* The definition adds `(\A j : ((LIFT0 (j < i)) \impl (M_ j)))` to hypothesis
+(* The definition adds `(\A j \st ((\lift0 (j < i)) \impl (M_ j)))` to hypothesis
    (2) b as is done in `Decomposition` (SCP, Theorem 8.7) but missing from
    Theorem 2. *)
 Theorem GeneralDecomposition {V : Type} (v : State -> V) (E : prop) (E_ Ml_ M_ : nat -> prop) :
@@ -293,7 +293,7 @@ Theorem GeneralDecomposition {V : Type} (v : State -> V) (E : prop) (E_ Ml_ M_ :
     (* If... *)
     (* (1) *)
     (forall i : nat,
-            valid (((util_closure E) \land (\A j : (util_closure (M_ j))))
+            valid (((util_closure E) \land (\A j \st (util_closure (M_ j))))
                 \impl (E_ i))) ->
     (* (2) (a) *)
     (forall i : nat,
@@ -301,15 +301,15 @@ Theorem GeneralDecomposition {V : Type} (v : State -> V) (E : prop) (E_ Ml_ M_ :
                 \impl (util_closure (M_ i)))) ->
     (* (2) (b) *)
     (forall i : nat,
-            valid (((E_ i) \land ((Ml_ i) \land (\A j : ((LIFT0 (j < i)) \impl (M_ j)))))
+            valid (((E_ i) \land ((Ml_ i) \land (\A j \st ((\lift0 (j < i)) \impl (M_ j)))))
                 \impl (M_ i))) ->
     (* ...then *)
     (* (a) *)
-    valid (((util_plus_operator (util_closure E) v) \land (\A j : (util_closure (Ml_ j))))
-        \impl (\A j : (util_closure (M_ j))))
+    valid (((util_plus_operator (util_closure E) v) \land (\A j \st (util_closure (Ml_ j))))
+        \impl (\A j \st (util_closure (M_ j))))
     (* (b) *)
-    /\ valid ((E \land (\A j : Ml_ j))
-        \impl (\A j : M_ j)).
+    /\ valid ((E \land (\A j \st Ml_ j))
+        \impl (\A j \st M_ j)).
 Proof.
 (* TODO *) Admitted.
 
@@ -321,16 +321,16 @@ Theorem GeneralDecomposition0 (E : prop) (E_ Ml_ M_ : nat -> prop) :
     (* If... *)
     (* (1) *)
     (forall i : nat,
-            valid ((E \land (\A j : ((LIFT0 (j < i)) \impl (M_ j))))
+            valid ((E \land (\A j \st ((\lift0 (j < i)) \impl (M_ j))))
                 \impl (E_ i))) ->
     (* (2) (b) *)
     (forall i : nat,
-            valid (((E_ i) \land ((Ml_ i) \land (\A j : ((LIFT0 (j < i)) \impl (M_ j)))))
+            valid (((E_ i) \land ((Ml_ i) \land (\A j \st ((\lift0 (j < i)) \impl (M_ j)))))
                 \impl (M_ i))) ->
     (* ...then *)
     (* (b) *)
-    valid ((E \land (\A j : Ml_ j))
-        \impl (\A j : M_ j)).
+    valid ((E \land (\A j \st Ml_ j))
+        \impl (\A j \st M_ j)).
 Proof.
 (* TODO *) Admitted.
 
@@ -343,16 +343,16 @@ Corollary GeneralDecomposition1 (dep : nat -> nat -> Prop) (E : prop) (E_ Ml_ M_
     (* If... *)
     (* (1) *)
     (forall i : nat,
-            valid ((E \land (\A j : ((LIFT0 (dep j i)) \impl (M_ j))))
+            valid ((E \land (\A j \st ((\lift0 (dep j i)) \impl (M_ j))))
                 \impl (E_ i))) ->
     (* (2) (b) *)
     (forall i : nat,
-            valid (((E_ i) \land ((Ml_ i) \land (\A j : ((LIFT0 (dep j i)) \impl (M_ j)))))
+            valid (((E_ i) \land ((Ml_ i) \land (\A j \st ((\lift0 (dep j i)) \impl (M_ j)))))
                 \impl (M_ i))) ->
     (* ...then *)
     (* (b) *)
-    valid ((E \land (\A j : Ml_ j))
-        \impl (\A j : M_ j)).
+    valid ((E \land (\A j \st Ml_ j))
+        \impl (\A j \st M_ j)).
 Proof.
 (* TODO *) Admitted.
 

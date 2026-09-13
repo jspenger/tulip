@@ -102,7 +102,7 @@ Admitted.
 (* ========================================================================== *)
 
 Definition HC_Is_Live : property HC.State :=
-    \A x \in { x : nat | 1 <= x <= 12 } : (
+    \A x \in { x : nat | 1 <= x <= 12 } \st (
         []<> Lift1 (fun s =>
             HC.hour s = proj1_sig x
         )
@@ -125,7 +125,7 @@ Admitted.
 (* ========================================================================== *)
 
 Definition F : property HC.State :=
-    WF_(HC.vars) (HC.Next).
+    \wf HC.Next \sub HC.vars.
 
 Theorem fair_hc_impl_live :
     valid (
@@ -167,11 +167,11 @@ Module HMC.
     ).
 
     Definition F : property HMC.State :=
-        WF_(HMC.vars) (HMC.Next).
+        \wf HMC.Next \sub HMC.vars.
 End HMC.
 
 (* ========================================================================== *)
-(* Refinement: valid ((HMC.Spec WITH r) \impl HC.Spec)                        *)
+(* Refinement: valid ((HMC.Spec \with r) \impl HC.Spec)                       *)
 (* ========================================================================== *)
 
 Definition r (s : HMC.State) : HC.State := 
@@ -179,7 +179,7 @@ Definition r (s : HMC.State) : HC.State :=
 
 Theorem hmc_refines_hc : 
     valid (
-        (HMC.Spec WITH r) \impl HC.Spec
+        (HMC.Spec \with r) \impl HC.Spec
     ).
 Proof.
     admit.
@@ -187,7 +187,7 @@ Admitted.
 
 Theorem hc_refines_hmc : 
     valid (
-        HC.Spec \impl (HMC.Spec WITH r)
+        HC.Spec \impl (HMC.Spec \with r)
     ).
 Proof.
     admit.
@@ -195,7 +195,7 @@ Admitted.
 
 Theorem hmc_equiv_hc : 
     valid (
-        (HMC.Spec WITH r) \equiv HC.Spec
+        (HMC.Spec \with r) \equiv HC.Spec
     ).
 Proof.
     admit.
@@ -207,7 +207,7 @@ Admitted.
 
 Theorem fair_hmc_refines_fair_hc : 
     valid (
-        ((HMC.Spec \land HMC.F) WITH r) \impl (HC.Spec \land F)
+        ((HMC.Spec \land HMC.F) \with r) \impl (HC.Spec \land F)
     ).
 Proof.
     admit.
@@ -215,7 +215,7 @@ Admitted.
 
 Theorem fair_hc_refines_fair_hmc : 
     valid (
-        (HC.Spec \land F) \impl ((HMC.Spec \land HMC.F) WITH r)
+        (HC.Spec \land F) \impl ((HMC.Spec \land HMC.F) \with r)
     ).
 Proof.
     admit.
@@ -223,7 +223,7 @@ Admitted.
 
 Theorem fair_hmc_equiv_fair_hc : 
     valid (
-        ((HMC.Spec \land HMC.F) WITH r) \equiv (HC.Spec \land F)
+        ((HMC.Spec \land HMC.F) \with r) \equiv (HC.Spec \land F)
     ).
 Proof.
     admit.

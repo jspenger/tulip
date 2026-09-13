@@ -105,13 +105,13 @@ Lemma LATTICE (T : Type) (wf_rel : T -> T -> Prop) (F : prop) (H : T -> prop) (G
     /\ well_founded wf_rel
     /\ valid (
         F \impl (
-            \A c \in T :
+            \A c \in T \st
                 H c \leadsto
-                    (G \lor (\E d \in T : ((Lift0 (wf_rel d c)) \land (H d))))
+                    (G \lor (\E d \in T \st ((Lift0 (wf_rel d c)) \land (H d))))
         )
     ))
     ->
-    valid (F \impl ((\E c : (H c)) \leadsto G)).
+    valid (F \impl ((\E c \st (H c)) \leadsto G)).
 Proof.
   admit.
 Admitted.
@@ -148,7 +148,7 @@ Lemma TLA1 {V : Type} (P : prop) (f : State -> V) :
     util_stuttering_closed P
     ->
     valid (
-        (P \land (UNCHANGED f))
+        (P \land (\unchanged f))
         \impl
         (P ')
     )
@@ -221,7 +221,7 @@ Lemma F1 {T : Type} (F : T -> prop) (e : T) :
     valid (
         (F e)
         \impl
-        (\E c : (F c))
+        (\E c \st (F c))
     ).
 Proof.
   admit.
@@ -229,11 +229,11 @@ Admitted.
 
 Lemma F2 {T : Type} (F : T -> prop) (G : prop) :
     valid (
-        (\A c : ((F c) \impl G))
+        (\A c \st ((F c) \impl G))
     )
     ->
     valid(
-        ((\E c : (F c)) \impl G)
+        ((\E c \st (F c)) \impl G)
     ).
 Proof.
   admit.
