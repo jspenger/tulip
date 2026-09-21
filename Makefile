@@ -1,3 +1,6 @@
+# File adapted from the Coq reference manual:
+# https://rocq-prover.org/doc/V8.9.1/refman/practical-tools/utilities.html#reusing-extending-the-generated-makefile
+
 KNOWNTARGETS  := CoqMakefile
 KNOWNFILES    := Makefile _CoqProject
 .DEFAULT_GOAL := invoke-coqmakefile
