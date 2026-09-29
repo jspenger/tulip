@@ -170,7 +170,7 @@ Theorem Decomposition0 (E Ml M : nat -> prop) :
     (* ...then *)
     valid ((\A i \st Ml i) \impl (\A i \st M i)).
 Proof.
-(* TODO *)  Admitted.
+(* TODO *) Admitted.
 
 (* Acyclic composition of `M0` and `M1` where `M1` depends on the specification 
    of `M0` (and not the implementation `Ml0` of `M0`). *)
@@ -180,7 +180,7 @@ Proof.
         valid ((M0 \land Ml1)  \impl  M1)  ->
             valid ((Ml0 \land Ml1)  \impl  (M0 \land M1)).
 Proof.
-(* TODO *)  Admitted.
+(* TODO *) Admitted.
 
 (* Not from refs *)
 (* Acyclic form of the `Decomposition` theorem with structure defined over

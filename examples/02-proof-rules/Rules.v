@@ -15,16 +15,14 @@ Context {State : Type}.
 #[local] Lemma util_suffix_0 (beh : behavior State) :
     util_suffix beh 0 = beh.
 Proof.
-  admit.
-Admitted.
+(* TODO *) Admitted.
 
 (* Note: not from references *)
 #[local] Lemma util_beh_eq (b c : behavior State) :
     (forall n : nat, b n = c n) ->
         util_stuttering_equivalent b c.
 Proof.
-  admit.
-Admitted.
+(* TODO *) Admitted.
 
 (* ========================================================================== *)
 (* The proof rules are from (unless otherwise stated):                        *)
@@ -45,28 +43,24 @@ Lemma STL1 (F : prop) :
     valid F ->
         valid ([]F).
 Proof.
-  admit.
-Admitted.
+(* TODO *) Admitted.
 
 Lemma STL2 (F : prop) :
     valid ([]F \impl F).
 Proof.
-  admit.
-Admitted.
+(* TODO *) Admitted.
 
 Lemma STL3 (F : prop) :
     util_stuttering_closed F ->
         valid ([][]F \equiv []F).
 Proof.
-  admit.
-Admitted.
+(* TODO *) Admitted.
 
 Lemma STL4 (F G : prop) :
     valid (F \impl G) ->
         valid ([]F \impl []G).
 Proof.
-  admit.
-Admitted.
+(* TODO *) Admitted.
 
 (* STL4 (Merz, 2003) *)
 Lemma STL4_2 (F G : prop) :
@@ -74,8 +68,7 @@ Lemma STL4_2 (F G : prop) :
         [](F \impl G) \impl
             ([]F \impl []G)).
 Proof.
-  admit.
-Admitted.
+(* TODO *) Admitted.
 
 Lemma STL5 (F G : prop) :
     valid (
@@ -83,8 +76,7 @@ Lemma STL5 (F G : prop) :
             []F \land []G
     ).
 Proof.
-  admit.
-Admitted.
+(* TODO *) Admitted.
 
 Lemma STL6 (F G : prop) :
     (util_stuttering_closed F /\ util_stuttering_closed G) ->
@@ -94,8 +86,7 @@ Lemma STL6 (F G : prop) :
             <>[](F \land G)
         ).
 Proof.
-  admit.
-Admitted.
+(* TODO *) Admitted.
 
 Lemma LATTICE (T : Type) (wf_rel : T -> T -> Prop) (F : prop) (H : T -> prop) (G : prop) :
     (util_stuttering_closed G
@@ -113,8 +104,7 @@ Lemma LATTICE (T : Type) (wf_rel : T -> T -> Prop) (F : prop) (H : T -> prop) (G
     ->
     valid (F \impl ((\E c \st (H c)) \leadsto G)).
 Proof.
-  admit.
-Admitted.
+(* TODO *) Admitted.
 
 (* Comment: Some of the presented proof rules could be strengthened. This     *)
 (* applies to STL4 (for which the strengthened version is STL4_2 (Merz 2003)),*)
@@ -128,8 +118,7 @@ Admitted.
         -> valid F
             -> valid G.
 Proof.
-  admit.
-Admitted.
+(* TODO *) Admitted.
 
 (* Note: not from references *)
 #[local] Lemma R2 (F G : prop) :
@@ -137,8 +126,7 @@ Admitted.
         -> valid F
             -> valid G.
 Proof.
-  admit.
-Admitted.
+(* TODO *) Admitted.
 
 (* ========================================================================== *)
 (* The Basic Rules of TLA                                                     *)
@@ -159,8 +147,7 @@ Lemma TLA1 {V : Type} (P : prop) (f : State -> V) :
         (P \land []([P \impl P ']_f))
     ).
 Proof.
-  admit.
-Admitted.
+(* TODO *) Admitted.
 
 Lemma TLA2 {Vf Vg : Type} (P A Q B : prop) (f : State -> Vf) (g : State -> Vg) :
     valid (
@@ -175,8 +162,7 @@ Lemma TLA2 {Vf Vg : Type} (P A Q B : prop) (f : State -> Vf) (g : State -> Vg) :
         ([]Q \land []([B]_g))
     ).
 Proof.
-  admit.
-Admitted.
+(* TODO *) Admitted.
 
 (* ========================================================================== *)
 (* Additional Rules                                                           *)
@@ -195,8 +181,7 @@ Lemma INV1 {V : Type} (I N : prop) (f : State -> V) :
         ([]I)
     ).
 Proof.
-  admit.
-Admitted.
+(* TODO *) Admitted.
 
 Lemma INV2 {V : Type} (I N : prop) (f : State -> V) :
     util_stuttering_closed I ->
@@ -210,8 +195,7 @@ Lemma INV2 {V : Type} (I N : prop) (f : State -> V) :
         )
     ).
 Proof.
-  admit.
-Admitted.
+(* TODO *) Admitted.
 
 (* ========================================================================== *)
 (* Quantification                                                             *)
@@ -224,8 +208,7 @@ Lemma F1 {T : Type} (F : T -> prop) (e : T) :
         (\E c \st (F c))
     ).
 Proof.
-  admit.
-Admitted.
+(* TODO *) Admitted.
 
 Lemma F2 {T : Type} (F : T -> prop) (G : prop) :
     valid (
@@ -236,8 +219,7 @@ Lemma F2 {T : Type} (F : T -> prop) (G : prop) :
         ((\E c \st (F c)) \impl G)
     ).
 Proof.
-  admit.
-Admitted.
+(* TODO *) Admitted.
 
 (* E1 (Lamport 1994): See EE1 in examples/02-proof-rules/QuantificationRules.v *)
 (* E2 (Lamport 1994): See EE2 in examples/02-proof-rules/QuantificationRules.v *)

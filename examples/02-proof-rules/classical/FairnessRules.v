@@ -38,8 +38,7 @@ Lemma WF1 {V : Type} (P Q N A : prop) (f : State -> V) :
         (P \leadsto Q)
     ).
 Proof.
-    admit.
-Admitted.
+(* TODO *) Admitted.
 
 Lemma WF2 {Vf Vg : Type} (N M A B P F : prop) (f : State -> Vf) (g : State -> Vg) :
     valid (
@@ -58,8 +57,7 @@ Lemma WF2 {Vf Vg : Type} (N M A B P F : prop) (f : State -> Vf) (g : State -> Vg
         (([]([N]_f)) \land (\wf A \sub f) \land ([]F)) \impl (\wf M \sub g)
     ).
 Proof.
-    admit.
-Admitted.
+(* TODO *) Admitted.
 
 Lemma SF1 {V : Type} (P Q N A F : prop) (f : State -> V) :
     valid(
@@ -75,8 +73,7 @@ Lemma SF1 {V : Type} (P Q N A F : prop) (f : State -> V) :
         (([]([N]_f)) \land (\sf A \sub f) \land ([]F)) \impl (P \leadsto Q)
     ).
 Proof.
-    admit.
-Admitted.
+(* TODO *) Admitted.
 
 Lemma SF2 {Vf Vg : Type} (N M A B P F : prop) (f : State -> Vf) (g : State -> Vg) :
     valid (
@@ -95,7 +92,6 @@ Lemma SF2 {Vf Vg : Type} (N M A B P F : prop) (f : State -> Vf) (g : State -> Vg
         (([]([N]_f)) \land (\sf A \sub f) \land ([]F)) \impl (\sf M \sub g)
     ).
 Proof.
-    admit.
-Admitted.
+(* TODO *) Admitted.
 
 End rules.

@@ -70,16 +70,14 @@ Theorem hc_impl_type_ok :
     ).
 Proof.
     (* The proof is left as an exercise for the reader ;-) *)
-    admit.
-Admitted.
+(* TODO *) Admitted.
 
 Theorem hc_impl_incr_ok :
     valid (
         HC.Spec \impl Incr_OK
     ).
 Proof.
-    admit.
-Admitted.
+(* TODO *) Admitted.
 
 (* ========================================================================== *)
 (* Safety props imply hc: valid ((Type_OK \land Incr_OK) \impl HC.Spec)       *)
@@ -90,8 +88,7 @@ Theorem safety_impl_hc :
         (Type_OK \land Incr_OK) \impl HC.Spec
     ).
 Proof.
-    admit.
-Admitted.
+(* TODO *) Admitted.
 
 (* ========================================================================== *)
 (* Liveness                                                                   *)
@@ -117,8 +114,7 @@ Theorem not_hc_impl_live :
         HC.Spec \impl HC_Is_Live
     ).
 Proof.
-    admit.
-Admitted.
+(* TODO *) Admitted.
 
 (* ========================================================================== *)
 (* Fair hour clock is live: valid ((HC.Spec \land F) \impl HC_Is_Live)        *)
@@ -132,8 +128,7 @@ Theorem fair_hc_impl_live :
         (HC.Spec \land F) \impl HC_Is_Live
     ).
 Proof.
-    admit.
-Admitted.
+(* TODO *) Admitted.
 
 (* ========================================================================== *)
 (* Refinemenet                                                                *)
@@ -182,24 +177,21 @@ Theorem hmc_refines_hc :
         (HMC.Spec \with r) \impl HC.Spec
     ).
 Proof.
-    admit.
-Admitted.
+(* TODO *) Admitted.
 
 Theorem hc_refines_hmc : 
     valid (
         HC.Spec \impl (HMC.Spec \with r)
     ).
 Proof.
-    admit.
-Admitted.
+(* TODO *) Admitted.
 
 Theorem hmc_equiv_hc : 
     valid (
         (HMC.Spec \with r) \equiv HC.Spec
     ).
 Proof.
-    admit.
-Admitted.
+(* TODO *) Admitted.
 
 (* ========================================================================== *)
 (* Refinement with fairness                                                   *)
@@ -210,21 +202,18 @@ Theorem fair_hmc_refines_fair_hc :
         ((HMC.Spec \land HMC.F) \with r) \impl (HC.Spec \land F)
     ).
 Proof.
-    admit.
-Admitted.
+(* TODO *) Admitted.
 
 Theorem fair_hc_refines_fair_hmc : 
     valid (
         (HC.Spec \land F) \impl ((HMC.Spec \land HMC.F) \with r)
     ).
 Proof.
-    admit.
-Admitted.
+(* TODO *) Admitted.
 
 Theorem fair_hmc_equiv_fair_hc : 
     valid (
         ((HMC.Spec \land HMC.F) \with r) \equiv (HC.Spec \land F)
     ).
 Proof.
-    admit.
-Admitted.
+(* TODO *) Admitted.
