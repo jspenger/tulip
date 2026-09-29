@@ -17,7 +17,7 @@ Require Import tulip.tla.TLA.
 (* ========================================================================== *)
 
 Module HC.
-    Record State := { hour : nat }.
+    Record State := Build_State { hour : nat }.
     #[local] Notation prop := (property State).
     Definition vars (s : State) : State := s.
 
@@ -144,7 +144,7 @@ Admitted.
 (* ========================================================================== *)
 
 Module HMC.
-    Record State := { hour : nat ; minute : nat }.
+    Record State := Build_State { hour : nat ; minute : nat }.
     #[local] Notation prop := (property State).
     Definition vars (s : State) : State := s.
 
