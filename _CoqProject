@@ -12,3 +12,4 @@ examples/02-proof-rules/CompositionRules.v
 examples/02-proof-rules/QuantificationRules.v
 examples/02-proof-rules/WellFormed.v
 examples/02-proof-rules/classical/FairnessRules.v
+examples/02-proof-rules/classical/QuantificationRules.v

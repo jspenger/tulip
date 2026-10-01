@@ -113,11 +113,3 @@ Lemma FF3 {V : Type} (x : string) (F G : property (State V)) :
         -> valid ((\AA x : F) \impl (\AA x : G)).
 Proof.
 (* TODO *) Admitted.
-
-(* Not from refs *)
-Lemma FF4 {V : Type} (x : string) (F G : property (State V)) :
-    valid (F \impl \AA x : F) -> (* x not free in F *)
-        valid ((\AA x : (F \lor G))
-            \equiv (F \lor (\AA x : G))).
-Proof.
-(* TODO *) Admitted.
