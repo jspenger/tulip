@@ -1,4 +1,5 @@
 Require Import tulip.tla.TLA.
+Require Import tulip.tla.x_Closed.
 
 #[local] Open Scope tla_scope.
 
@@ -250,11 +251,89 @@ Inductive Kanonical : prop -> Prop :=
 (* Well-formed formula is  stuttering closed                                  *)
 (* ========================================================================== *)
 
+#[local] Definition util_level (l : nat) (P : prop) : Prop :=
+    match l with
+    | 0 | 1 | 2 => util_reads l P
+    | _ => util_stuttering_closed P
+    end.
+
+#[local] Lemma level_reads (l : nat) (F : prop) :
+    l <= 1 -> util_level l F -> util_reads l F.
+Proof.
+    intros Hl H. destruct l as [| [| l]]; [exact H | exact H | lia].
+Qed.
+
+#[local] Lemma wellformed_level (l : nat) (F : prop) :
+    WellFormedN l F ->
+        util_level l F.
+Proof.
+    intros H. induction H as
+        [ l l' F Hl Hll' Hl' HF IHF | l F Hle HF IHF
+        | p | p | a
+        | F HF IHF | F HF IHF | l F HF IHF
+        | l F HF IHF
+        | l F G HF IHF HG IHG | l F G HF IHF HG IHG
+        | l F G HF IHF HG IHG | l F G HF IHF HG IHG
+        | l T F HF IHF | l T F HF IHF
+        | V e
+        | F G HF IHF HG IHG
+        | V F e HF IHF | V F e HF IHF | V F e HF IHF | V F e HF IHF
+        | P F G HP IHP HF IHF HG IHG
+        | V e F HF IHF | V e F HF IHF
+        | State1 r F | State1 r F | State1 r F | State1 r F ].
+    - destruct l' as [| [| [| [| l']]]]; [| | | | lia].
+      1-3: exact (reads_weaken l _ F Hll' (level_reads l F Hl IHF)).
+      exact (reads_stuttering_closed l F Hl (level_reads l F Hl IHF)).
+    - apply (reads_weaken (S l) 2 (F ')); [lia |].
+      exact (prime_reads l F (level_reads l F Hle IHF)).
+    - exact (lift0_reads p).
+    - exact (lift1_reads p).
+    - exact (lift2_reads a).
+    - exact (always_stuttering_closed F IHF).
+    - exact (eventually_stuttering_closed F IHF).
+    - exact (enabled_reads F).
+    - destruct l as [| [| [| l]]]; unfold util_level in *.
+      1-3: exact (not_reads _ F IHF).
+      exact (not_stuttering_closed F IHF).
+    - destruct l as [| [| [| l]]]; unfold util_level in *.
+      1-3: exact (and_reads _ F G IHF IHG).
+      exact (and_stuttering_closed F G IHF IHG).
+    - destruct l as [| [| [| l]]]; unfold util_level in *.
+      1-3: exact (or_reads _ F G IHF IHG).
+      exact (or_stuttering_closed F G IHF IHG).
+    - destruct l as [| [| [| l]]]; unfold util_level in *.
+      1-3: exact (implication_reads _ F G IHF IHG).
+      exact (implication_stuttering_closed F G IHF IHG).
+    - destruct l as [| [| [| l]]]; unfold util_level in *.
+      1-3: exact (iff_reads _ F G IHF IHG).
+      exact (iff_stuttering_closed F G IHF IHG).
+    - destruct l as [| [| [| l]]]; unfold util_level in *.
+      1-3: exact (exists_reads _ F IHF).
+      exact (exists_stuttering_closed F IHF).
+    - destruct l as [| [| [| l]]]; unfold util_level in *.
+      1-3: exact (forall_reads _ F IHF).
+      exact (forall_stuttering_closed F IHF).
+    - exact (unchanged_reads e).
+    - exact (leadsto_stuttering_closed F G IHF IHG).
+    - exact (stutter_reads F e IHF).
+    - exact (always_stutter_stuttering_closed F e IHF).
+    - exact (nonstutter_reads F e IHF).
+    - exact (eventually_nonstutter_stuttering_closed F e IHF).
+    - exact (ifthenelse_stuttering_closed P F G IHP IHF IHG).
+    - exact (weak_fairness_stuttering_closed e F IHF).
+    - exact (strong_fairness_stuttering_closed e F IHF).
+    - exact (refinement_mapping_stuttering_closed r F).
+    - exact (corefinement_mapping_stuttering_closed r F).
+    - exact (refinement_mapping0_stuttering_closed r F).
+    - exact (corefinement_mapping0_stuttering_closed r F).
+Qed.
+
 Theorem wellformed_stuttering_closed (F : prop) :
     WellFormed F ->
         util_stuttering_closed F.
 Proof.
-(* TODO *) Admitted.
+    intros H. exact (wellformed_level 3 F H).
+Qed.
 
 (* ========================================================================== *)
 (* Kanonical form is well formed                                              *)
@@ -264,12 +343,20 @@ Theorem kanonical_wellformed (F : prop) :
     Kanonical F ->
         WellFormed F.
 Proof.
-(* TODO *) Admitted.
+    intros H.
+    induction H as [I HI | V N e HN | V F e HF | V F e HF | F G HF IHF HG IHG].
+    - refine (wf_weaken 1 3 I _ _ _ HI); lia.
+    - exact (wf_always_stutter N e HN).
+    - exact (wf_weak_fairness e F HF).
+    - exact (wf_strong_fairness e F HF).
+    - exact (wf_land 3 F G IHF IHG).
+Qed.
 
 Corollary kanonical_stuttering_closed (F : prop) :
     Kanonical F ->
         util_stuttering_closed F.
 Proof.
-(* TODO *) Admitted.
+    intros H. exact (wellformed_stuttering_closed F (kanonical_wellformed F H)).
+Qed.
 
 End rules.

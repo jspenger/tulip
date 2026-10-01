@@ -3,6 +3,9 @@
 -Q examples/02-proof-rules tulip.examples.proofrules
 
 tulip-tla/TLA.v
+tulip-tla/x_Base.v
+tulip-tla/x_Stutter.v
+tulip-tla/x_Closed.v
 
 examples/01-hour-clock/HourClock.v
 
