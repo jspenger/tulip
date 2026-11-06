@@ -580,4 +580,51 @@ Proof.
     exact (Hyp2b i beh (conj (Hyp1 i beh (conj HE IH)) (conj (HMl i) IH))).
 Qed.
 
+(* Not from refs *)
+(* TODO: Generalize similarly to the Decomposition theorem(s). *)
+Theorem LocalDecomposition {State2 : Type} (f : State -> State2) (E1 : prop) (E2 : property State2) (F G H : prop) :
+    (* If... *)
+    valid ((E2 \land ((F \land E1) \with f))
+                \impl (G \with f)) ->
+    valid ((E2 \land (H \with f))
+                \impl (H \cowith f)) ->
+    valid (H
+                \impl E1) ->
+    valid ((H \with f)
+                \impl E2) ->
+    (* ...then *)
+    valid (((F \land H) \with f)
+                \impl ((G \land H) \with f)).
+Proof.
+(* TODO *) Admitted.
+
+(* Not from refs *)
+(* TODO: Generalize similarly to the Decomposition theorem(s). *)
+Theorem LocalDecomposition0 {State2 : Type} (r : State -> State2 -> Prop) (E1 : prop) (E2 : property State2) (F G H : prop) :
+    (* If... *)
+    valid ((E2 \land ((F \land E1) \with0 r))
+                \impl (G \with0 r)) ->
+    valid ((E2 \land (H \with0 r))
+                \impl (H \cowith0 r)) ->
+    valid (H
+                \impl E1) ->
+    valid ((H \with0 r)
+                \impl E2) ->
+    (* ...then *)
+    valid (((F \land H) \with0 r)
+                \impl ((G \land H) \with0 r)).
+Proof.
+(* TODO *) Admitted.
+
+(* Not from refs *)
+#[local] Example ex_02 {State2 : Type} (f : State -> State2) (F G H : prop) :
+    valid ((F \with f)
+                \impl (G \with f)) ->
+    valid ((H \with f)
+                \impl (H \cowith f)) ->
+    valid (((F \land H) \with f)
+                \impl ((G \land H) \with f)).
+Proof.
+(* TODO *) Admitted.
+
 End rules.
