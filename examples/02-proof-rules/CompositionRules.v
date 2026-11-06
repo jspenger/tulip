@@ -596,7 +596,12 @@ Theorem LocalDecomposition {State2 : Type} (f : State -> State2) (E1 : prop) (E2
     valid (((F \land H) \with f)
                 \impl ((G \land H) \with f)).
 Proof.
-(* TODO *) Admitted.
+    intros HFG HH HE1 HE2 beh2 (beh1 & Hs & HF & HH1).
+    assert (Hw : (H \with f) beh2) by (exists beh1; split; assumption).
+    destruct (HFG beh2 (conj (HE2 beh2 Hw) (ex_intro _ beh1 (conj Hs (conj HF (HE1 beh1 HH1)))))) as (beh1' & Hs' & HG).
+    exists beh1'. split; [exact Hs' |]. split; [exact HG |].
+    exact (HH beh2 (conj (HE2 beh2 Hw) Hw) beh1' Hs').
+Qed.
 
 (* Not from refs *)
 (* TODO: Generalize similarly to the Decomposition theorem(s). *)
@@ -614,7 +619,12 @@ Theorem LocalDecomposition0 {State2 : Type} (r : State -> State2 -> Prop) (E1 : 
     valid (((F \land H) \with0 r)
                 \impl ((G \land H) \with0 r)).
 Proof.
-(* TODO *) Admitted.
+    intros HFG HH HE1 HE2 beh2 (beh1 & Hs & HF & HH1).
+    assert (Hw : (H \with0 r) beh2) by (exists beh1; split; assumption).
+    destruct (HFG beh2 (conj (HE2 beh2 Hw) (ex_intro _ beh1 (conj Hs (conj HF (HE1 beh1 HH1)))))) as (beh1' & Hs' & HG).
+    exists beh1'. split; [exact Hs' |]. split; [exact HG |].
+    exact (HH beh2 (conj (HE2 beh2 Hw) Hw) beh1' Hs').
+Qed.
 
 (* Not from refs *)
 #[local] Example ex_02 {State2 : Type} (f : State -> State2) (F G H : prop) :
@@ -625,6 +635,11 @@ Proof.
     valid (((F \land H) \with f)
                 \impl ((G \land H) \with f)).
 Proof.
-(* TODO *) Admitted.
+    intros HFG HH. apply (LocalDecomposition f (\lift0 True) (\lift0 True) F G H).
+    - intros beh2 [_ (beh1 & Hs & HF & _)]. apply HFG. exists beh1. split; assumption.
+    - intros beh2 [_ Hw]. exact (HH beh2 Hw).
+    - intros beh1 _. exact I.
+    - intros beh2 _. exact I.
+Qed.
 
 End rules.
