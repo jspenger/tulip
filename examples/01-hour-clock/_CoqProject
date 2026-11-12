@@ -1,0 +1,4 @@
+-Q ../../tulip-tla tulip.tla
+-Q .               tulip.examples.hourclock
+
+HourClock.v

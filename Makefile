@@ -1,17 +1,13 @@
-# File adapted from the Coq reference manual:
-# https://rocq-prover.org/doc/V8.9.1/refman/practical-tools/utilities.html#reusing-extending-the-generated-makefile
+KNOWNFILES    := Makefile
+.DEFAULT_GOAL := invoke-coqmakefile-all
 
-KNOWNTARGETS  := CoqMakefile
-KNOWNFILES    := Makefile _CoqProject
-.DEFAULT_GOAL := invoke-coqmakefile
+invoke-coqmakefile-all:
+	$(MAKE) -C tulip-tla      $(MAKECMDGOALS)
+	$(MAKE) -C tulip-tla-lib  $(MAKECMDGOALS)
+	$(MAKE) -C examples/01-hour-clock  $(MAKECMDGOALS)
+	$(MAKE) -C examples/02-proof-rules $(MAKECMDGOALS)
 
-CoqMakefile: Makefile _CoqProject
-	$(COQBIN)coq_makefile -f _CoqProject -o CoqMakefile
+.PHONY: invoke-coqmakefile-all $(KNOWNFILES)
 
-invoke-coqmakefile: CoqMakefile
-	$(MAKE) --no-print-directory -f CoqMakefile $(filter-out $(KNOWNTARGETS),$(MAKECMDGOALS))
-
-.PHONY: invoke-coqmakefile $(KNOWNFILES)
-
-%: invoke-coqmakefile
+%: invoke-coqmakefile-all
 	@true

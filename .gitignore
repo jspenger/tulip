@@ -4,7 +4,15 @@
 *.vok
 *.vos
 
+*.html
+*.css
+
+.*.cache
+
 .CoqMakefile.d
 .lia.cache
 CoqMakefile
 CoqMakefile.conf
+
+*a.out
+*.o

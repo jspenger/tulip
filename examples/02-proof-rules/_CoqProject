@@ -1,0 +1,10 @@
+-Q ../../tulip-tla tulip.tla
+-Q .               tulip.examples.proofrules
+
+Rules.v
+RefinementRules.v
+CompositionRules.v
+QuantificationRules.v
+WellFormed.v
+classical/FairnessRules.v
+classical/QuantificationRules.v
