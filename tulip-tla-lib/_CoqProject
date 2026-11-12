@@ -1,4 +1,8 @@
 -Q ../tulip-tla tulip.tla
 -Q .            tulip.tla.lib
 
+Common.v
+LL94.v
+LL94_2.v
+classical/LL94_2.v
 Prelude.v
