@@ -39,60 +39,62 @@ Definition EExists {Id Var : Type} (x : Id) (F : property (State Id Var)) : prop
 Definition FForall {Id Var : Type} (x : Id) (F : property (State Id Var)) : property (State Id Var) :=
     CoRefinementMapping0 (equal_up_to_x x) F.
 
-Notation "'\EE' x : F" :=
+(* Use `\st` standing for "such that" instead of `:`. This avoids confusion
+   with Coq's token `:` standing for "type of". *)
+Notation "'\EE' x \st F" :=
     (EExists x F)
     (at level 100, x at level 0, F at level 100) : tla_scope.
 
-Notation "'\AA' x : F" :=
+Notation "'\AA' x \st F" :=
     (FForall x F)
     (at level 100, x at level 0, F at level 100) : tla_scope.
 
 (* E1 from [1] *)
 Lemma EE1 {Id Var : Type} (x : Id) (F : property (State Id Var)) :
-    valid (F \impl (\EE x : F)).
+    valid (F \impl (\EE x \st F)).
 Proof.
 (* TODO *) Admitted.
 
 (* E2 from [1] *)
 Lemma EE2 {Id Var : Type} (x : Id) (F G : property (State Id Var)) :
-    valid ((\EE x : G) \impl G) -> (* x not free in G *)
+    valid ((\EE x \st G) \impl G) -> (* x not free in G *)
         valid (F \impl G) ->
-            valid ((\EE x : F) \impl G).
+            valid ((\EE x \st F) \impl G).
 Proof.
 (* TODO *) Admitted.
 
 (* Not from refs *)
 Lemma EE3 {Id Var : Type} (x : Id) (F G : property (State Id Var)) :
     valid (F \impl G)
-        -> valid ((\EE x : F) \impl (\EE x : G)).
+        -> valid ((\EE x \st F) \impl (\EE x \st G)).
 Proof.
 (* TODO *) Admitted.
 
 (* Not from refs *)
 Lemma EE4 {Id Var : Type} (x : Id) (F G : property (State Id Var)) :
-    valid ((\EE x : F) \impl F) -> (* x not free in F *)
-        valid ((\EE x : (F \land G))
-            \equiv (F \land (\EE x : G))).
+    valid ((\EE x \st F) \impl F) -> (* x not free in F *)
+        valid ((\EE x \st (F \land G))
+            \equiv (F \land (\EE x \st G))).
 Proof.
 (* TODO *) Admitted.
 
 (* E1 from [1] adapted to \AA *)
 Lemma FF1 {Id Var : Type} (x : Id) (F : property (State Id Var)) :
-    valid ((\AA x : F) \impl F).
+    valid ((\AA x \st F) \impl F).
 Proof.
 (* TODO *) Admitted.
 
 (* E2 from [1] adapted to \AA *)
 Lemma FF2 {Id Var : Type} (x : Id) (F G : property (State Id Var)) :
-    valid (G \impl (\AA x : G)) -> (* x not free in G *)
+    valid (G \impl (\AA x \st G)) -> (* x not free in G *)
         valid (G \impl F) ->
-            valid (G \impl (\AA x : F)).
+            valid (G \impl (\AA x \st F)).
 Proof.
 (* TODO *) Admitted.
 
 (* Not from refs *)
 Lemma FF3 {Id Var : Type} (x : Id) (F G : property (State Id Var)) :
     valid (F \impl G)
-        -> valid ((\AA x : F) \impl (\AA x : G)).
+        -> valid ((\AA x \st F) \impl (\AA x \st G)).
 Proof.
 (* TODO *) Admitted.

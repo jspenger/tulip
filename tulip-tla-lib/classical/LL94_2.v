@@ -106,8 +106,8 @@ End ll94_2.
 
 (* Not from refs *)
 Lemma FF4 {Id Var : Type} (x : Id) (F G : property (State Id Var)) :
-    valid (F \impl \AA x : F) -> (* x not free in F *)
-        valid ((\AA x : (F \lor G))
-            \equiv (F \lor (\AA x : G))).
+    valid (F \impl \AA x \st F) -> (* x not free in F *)
+        valid ((\AA x \st (F \lor G))
+            \equiv (F \lor (\AA x \st G))).
 Proof.
 (* TODO *) Admitted.
